@@ -1,0 +1,225 @@
+﻿<Page x:Class="auth.homepage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:auth"
+      mc:Ignorable="d" d:DesignWidth="1000"
+      Title="Главная страница"
+       Loaded="Page_Loaded" Height="800">
+    <Page.Resources>
+        <SolidColorBrush x:Key="PrimaryColorBrush" Color="#de3923" />
+
+        <Style x:Key="LoginButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Grid VerticalAlignment="Top" Height="59" Margin="0,0,4,0" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Margin="700,10,0,-0.2" Height="50" Click="btnProfile_Click" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Профиль">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Resources/нет.jpg" Height="50" Width="50" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="271,10,0,764" HorizontalAlignment="Left" Width="175">
+            <TextBlock Text="Приветствую!" FontSize="20"  />
+        </StackPanel>
+
+
+        <Border Background="White"  BorderThickness="1" CornerRadius="10" Margin="284,64,24,0"
+        HorizontalAlignment="Center" VerticalAlignment="Top" Height="113" Width="472" Grid.RowSpan="2">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0"  CornerRadius="10 10 0 0">
+                    <TextBlock Text="Песня дня"  FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Border>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+                    <Image x:Name="songImage" Source="{Binding PathToImage}" Width="60" Height="60" VerticalAlignment="Center" Margin="0,0,0,10" />
+                    <StackPanel Margin="10 0 0 0">
+                        <TextBlock x:Name="songNameTextBlock" Text="{Binding Title}" FontSize="16"/>
+                        <TextBlock x:Name="artistNameTextBlock" Text="{Binding Artist}" FontSize="14" Foreground="Gray" Width="162"
+                                   MouseEnter="artistname_MouseEnter" MouseLeave="artistname_MouseLeave" MouseLeftButtonDown="artistname_MouseLeftButtonDown"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 10 10" Width="60" Height="60" Foreground="White"
+                       Click="PlayButton_Click" >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid Background="White">
+                                            <Ellipse Fill="#de3923" />
+                                            <ContentPresenter Content="▶️"   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="0"  BorderThickness="1" Background="White" Margin="261,286,10,435.8" Cursor="Hand" 
+                MouseDown="NewReleasesBlock_MouseDown" Grid.RowSpan="1" CornerRadius="20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" Color="LightGray" ShadowDepth="0"/>
+            </Border.Effect>
+            <Grid>
+                <TextBlock Text="Новые релизы" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="100,0"/>
+                <Image Source="/Resources/new.png" Width="65" Height="Auto"  Margin="10,0,0,0.8" HorizontalAlignment="Left"/>
+
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="0"  BorderThickness="1" Background="White" Margin="261,389,10,344.8" Cursor="Hand" 
+                MouseDown="Wishesplaylist_MouseDown" Grid.RowSpan="1" CornerRadius="20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" Color="LightGray" ShadowDepth="0"/>
+            </Border.Effect>
+            <Grid>
+                <TextBlock Text="Вам понравится" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="100,0"/>
+                <Image Source="/Resources/wishes.png" Width="65" Height="Auto"  Margin="10,0,0,0.8" HorizontalAlignment="Left"/>
+
+            </Grid>
+        </Border>
+
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="255, 700, 5, 0" Height="100">
+            <Slider x:Name="songProgress" Value="{Binding Position.TotalSeconds, Mode=TwoWay}" Maximum="{Binding Duration.TotalSeconds}" ValueChanged="songProgress_ValueChanged" Grid.ColumnSpan="2" Margin="0,15" Grid.Row="1" Foreground="#de3923" />
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Center" Margin="162,-3" Height="32" Width="196">
+                <Button x:Name="before_btn" Content="⏮" Background="{StaticResource PrimaryColorBrush}" 
+                    Foreground="White" Click="PreviousSongButton_Click"/>
+                <Button x:Name="playStop_btn" Background="{StaticResource PrimaryColorBrush}" Click="PlayStop_Click">
+                    <TextBlock Text="▶️"/>
+                </Button>
+                <Button x:Name="next_btn" Content="⏭" Background="{StaticResource PrimaryColorBrush}" 
+                    Foreground="White" Click="NextSongButton_Click"/>
+
+            </StackPanel>
+
+            <Grid Width="150" Margin="360,-25,10,0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="5,0">🔇</TextBlock>
+
+                <Slider x:Name="VolumeSlider" Grid.Column="1" Value="{Binding Path=Instance.Volume, Source={x:Static local:MusicPlayer.Instance}}" Minimum="0" Maximum="1" VerticalAlignment="Center" Foreground="#de3923" />
+
+                <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="5,0">🔊</TextBlock>
+            </Grid>
+
+            <!-- Контролы для проигрывания песен -->
+        </StackPanel>
+
+        <!-- Боковая панель слева с плейлистами, понравившимися альбомами и исполнителями -->
+        <StackPanel Grid.Row="0" Grid.RowSpan="2" Background="LightGray" Margin="0,0,0,-39.6" HorizontalAlignment="Left" Width="254" VerticalAlignment="Stretch">
+
+            <Button Content="Главная" HorizontalAlignment="Left" Margin="10" Foreground="#de3923" 
+                    Style="{StaticResource MaterialDesignFlatButton}"/>
+            <Button Content="Поиск" HorizontalAlignment="Left" Margin="10" Background="{StaticResource PrimaryColorBrush}" 
+                    Foreground="White" Click="gosearch"/>
+
+            <Grid>
+
+                <TextBlock Text="Плейлисты" Margin="10,20,10,5" FontSize="16" FontWeight="Bold"/>
+                <Button Content="+" Click="OpenCreatePlaylistWindow" Margin="0,17,10,10.4" Foreground="#de3923" ToolTip="создать плейлист"
+                    Style="{StaticResource MaterialDesignFlatButton}" Height="Auto" Width="48" HorizontalAlignment="Right">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.148"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
+            </Grid>
+            <ListBox BorderThickness="0" Margin="10,5,10,0" Height="168">
+                <ListBoxItem Content="Понравившееся" MouseLeftButtonUp="OpenLikedPlaylist" 
+                             />
+                <ListBox Name="PlaylistListBox" BorderThickness="0" Margin="10,5,10,0" HorizontalAlignment="Left" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Margin="5"  MouseLeftButtonUp="OpenPlaylistPage"
+                                       MouseRightButtonUp="DeletePlaylist"
+                             Tag="{Binding}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Margin" Value="0,2" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                </ListBox>
+            </ListBox>
+
+            <TextBlock Text="Понравившиеся альбомы" Margin="10,20,10,5" FontSize="16" FontWeight="Bold"/>
+            <ListBox x:Name="listBoxLikedAlbums" BorderThickness="0" Margin="10,5,10,0" Height="177"
+                     >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" 
+                                   MouseLeftButtonUp="OpenAlbumPage"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <TextBlock Text="Понравившиеся исполнители" Margin="10,20,10,5" FontSize="16" FontWeight="Bold"/>
+            <ListBox x:Name="listBoxLikedArtists" BorderThickness="0" Margin="10,5,10,0" Height="146">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" 
+                                   MouseLeftButtonUp="OpenArtistPage"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <!-- Боковая панель справа с информацией о проигрываемой песне -->
+        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Background="LightGray" HorizontalAlignment="Right" Margin="0,0,0,-39.6" VerticalAlignment="Stretch">
+            <TextBlock Text="Информация о песне" Margin="10" FontWeight="Bold" FontSize="16" />
+            <Image x:Name="albumArtImage" Width="200" Height="200" Margin="10" Source="{Binding Path=CurrentSong.PathToImage}" />
+            <TextBlock x:Name="songTitleTextBlock" Text="{Binding Path=CurrentSong.Title}" Margin="10,0,10,5" />
+            <TextBlock x:Name="artistTextBlock" Text="{Binding Path=CurrentSong.Artist}" Margin="10,0,10,5" 
+                        MouseEnter="artistname_MouseEnter" MouseLeave="artistname_MouseLeave" MouseLeftButtonDown="artistname_MouseLeftButtonDown"/>
+        </StackPanel>
+
+
+
+
+    </Grid>
+</Page>

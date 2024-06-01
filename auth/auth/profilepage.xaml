@@ -1,0 +1,57 @@
+﻿<Page x:Class="auth.profilepage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:auth"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1000"
+      Title="Profilepg">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="PrimaryColorBrush" Color="#de3923" />
+
+        <Style x:Key="LoginButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </Page.Resources>
+    <Grid Background="#ffdadada" Height="Auto">
+
+        <StackPanel VerticalAlignment="Center" Margin="10,185,-10,194" Grid.RowSpan="1">
+        <Border MinWidth="400" Margin="15" Background="White" VerticalAlignment="Center" 
+                                Padding="30" MaxWidth="550" CornerRadius="20" >
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="60" Color="LightGray" ShadowDepth="0"/>
+            </Border.Effect>
+            <StackPanel>
+                <Grid>
+                    <TextBlock Text="Профиль" FontWeight="Bold" FontSize="20" Margin="0 0 0 20"/>
+                    <Button x:Name="ex_btn" Content="Выйти" HorizontalAlignment="Right"
+                                Background="{StaticResource PrimaryColorBrush}" 
+                    Foreground="White" Margin="0,0,0.4,14.4"
+                                Click="exit_btn"/>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="148" Width="157">
+
+                    <Image x:Name="avatarImage" Width="140" Source="{Binding Avatar}" Margin="15,10,0,10" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="20,0,10,0">
+                    <TextBlock  Text="Имя пользователя: " FontWeight="Bold"/>
+                    <TextBlock x:Name="usernameTextBlock" Text="{Binding Username}" Margin="15 0 0 0" Width="201" FontSize="14"/>
+                    <Button Content="🖉" Click="EditUsername_Click"  Foreground="#de3923" 
+                    Style="{StaticResource MaterialDesignFlatButton}"/>
+
+                </StackPanel>
+                <Button Content="Загрузить изображение" Click="SelectImage_Click" Foreground="#de3923" 
+                    Style="{StaticResource MaterialDesignFlatButton}" Margin="10"/>
+
+                <Button Content="Вернуться на главную страницу" Click="btnBack_Click" Foreground="#de3923" 
+                    Style="{StaticResource MaterialDesignFlatButton}" Margin="10"/>
+            </StackPanel>
+        </Border>
+        </StackPanel>
+
+    </Grid>
+</Page>
